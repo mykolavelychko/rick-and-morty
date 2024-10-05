@@ -210,6 +210,13 @@ export type GetCharactersQueryVariables = Exact<{
 
 export type GetCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, species?: string | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null } | null } | null> | null, info?: { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null } | null } | null };
 
+export type GetCharacterQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetCharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, name?: string | null, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, image?: string | null, origin?: { __typename?: 'Location', name?: string | null } | null, location?: { __typename?: 'Location', name?: string | null } | null, episode: Array<{ __typename?: 'Episode', id?: string | null, name?: string | null } | null> } | null };
+
 export type GetEpisodesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
 }>;
@@ -286,6 +293,62 @@ export type GetCharactersQueryHookResult = ReturnType<typeof useGetCharactersQue
 export type GetCharactersLazyQueryHookResult = ReturnType<typeof useGetCharactersLazyQuery>;
 export type GetCharactersSuspenseQueryHookResult = ReturnType<typeof useGetCharactersSuspenseQuery>;
 export type GetCharactersQueryResult = Apollo.QueryResult<GetCharactersQuery, GetCharactersQueryVariables>;
+export const GetCharacterDocument = gql`
+    query GetCharacter($id: ID!) {
+  character(id: $id) {
+    id
+    name
+    status
+    species
+    type
+    gender
+    origin {
+      name
+    }
+    location {
+      name
+    }
+    image
+    episode {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCharacterQuery__
+ *
+ * To run a query within a React component, call `useGetCharacterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCharacterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCharacterQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCharacterQuery(baseOptions: Apollo.QueryHookOptions<GetCharacterQuery, GetCharacterQueryVariables> & ({ variables: GetCharacterQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCharacterQuery, GetCharacterQueryVariables>(GetCharacterDocument, options);
+      }
+export function useGetCharacterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCharacterQuery, GetCharacterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCharacterQuery, GetCharacterQueryVariables>(GetCharacterDocument, options);
+        }
+export function useGetCharacterSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCharacterQuery, GetCharacterQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCharacterQuery, GetCharacterQueryVariables>(GetCharacterDocument, options);
+        }
+export type GetCharacterQueryHookResult = ReturnType<typeof useGetCharacterQuery>;
+export type GetCharacterLazyQueryHookResult = ReturnType<typeof useGetCharacterLazyQuery>;
+export type GetCharacterSuspenseQueryHookResult = ReturnType<typeof useGetCharacterSuspenseQuery>;
+export type GetCharacterQueryResult = Apollo.QueryResult<GetCharacterQuery, GetCharacterQueryVariables>;
 export const GetEpisodesDocument = gql`
     query GetEpisodes($page: Int) {
   episodes(page: $page) {
