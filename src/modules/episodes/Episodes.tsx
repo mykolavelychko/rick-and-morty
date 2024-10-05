@@ -8,14 +8,16 @@ import {
   TableHeaderCell,
   TableRow,
 } from "../../shared/styles";
+import { useNavigate } from "react-router-dom";
 
 export const Episodes = () => {
+  const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
   const { data, loading, error } = useGetEpisodesQuery({
     variables: { page },
   });
 
-  const locations = (data?.episodes?.results || []).filter(
+  const episodes = (data?.episodes?.results || []).filter(
     (episode): episode is Episode => episode !== null
   );
   const pageInfo = data?.episodes?.info || {};
@@ -39,12 +41,12 @@ export const Episodes = () => {
           </TableRow>
         </TableHeader>
         <tbody>
-          {locations.map((location) => (
-            <Fragment key={location.id}>
-              <TableRow onClick={() => location.id}>
-                <TableCell>{location.name}</TableCell>
-                <TableCell>{location.air_date}</TableCell>
-                <TableCell>{location.episode}</TableCell>
+          {episodes.map((episode) => (
+            <Fragment key={episode.id}>
+              <TableRow onClick={() => navigate(`/episode/${episode.id}`)}>
+                <TableCell>{episode.name}</TableCell>
+                <TableCell>{episode.air_date}</TableCell>
+                <TableCell>{episode.episode}</TableCell>
               </TableRow>
             </Fragment>
           ))}

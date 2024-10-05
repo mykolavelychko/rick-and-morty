@@ -18,3 +18,16 @@ query GetEpisodes($page: Int) {
     }
   }
 }
+
+query GetEpisode($id: ID!) {
+  episode(id: $id) {
+    air_date
+    episode
+    id
+    name
+    characters {
+      id
+      name
+    }
+  }
+}
