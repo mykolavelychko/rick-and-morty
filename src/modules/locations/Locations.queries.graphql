@@ -1,0 +1,20 @@
+query GetLocations($page: Int) {
+  locations(page: $page) {
+    results {
+      dimension
+      id
+      name
+      residents {
+        id
+        name
+      }
+      type
+    }
+    info {
+      count
+      pages
+      next
+      prev
+    }
+  }
+}

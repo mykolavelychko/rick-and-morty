@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NotFound from "../modules/NotFound";
 import { Characters } from "../modules/characters/Characters";
+import { Locations } from "../modules/locations/Locations";
 
-const Locations = () => <div>Locations Component</div>;
 const Episodes = () => <div>Episodes Component</div>;
 
 function AppRouter() {
