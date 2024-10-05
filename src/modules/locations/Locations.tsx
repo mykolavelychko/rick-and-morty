@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Location, useGetLocationsQuery } from "../../generated/graphql";
 import {
   Container,
@@ -10,6 +11,7 @@ import {
 } from "../../shared/styles";
 
 export const Locations = () => {
+  const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
   const { data, loading, error } = useGetLocationsQuery({
     variables: { page },
@@ -41,7 +43,7 @@ export const Locations = () => {
         <tbody>
           {locations.map((location) => (
             <Fragment key={location.id}>
-              <TableRow onClick={() => location.id}>
+              <TableRow onClick={() => navigate(`/location/${location.id}`)}>
                 <TableCell>{location.name}</TableCell>
                 <TableCell>{location.type}</TableCell>
                 <TableCell>{location.dimension}</TableCell>
