@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Location, useGetLocationsQuery } from "../../generated/graphql";
+import { Episode, useGetEpisodesQuery } from "../../generated/graphql";
 import {
   Container,
   Table,
@@ -9,16 +9,16 @@ import {
   TableRow,
 } from "../../shared/styles";
 
-export const Locations = () => {
+export const Episodes = () => {
   const [page, setPage] = useState<number>(1);
-  const { data, loading, error } = useGetLocationsQuery({
+  const { data, loading, error } = useGetEpisodesQuery({
     variables: { page },
   });
 
-  const locations = (data?.locations?.results || []).filter(
-    (location): location is Location => location !== null
+  const locations = (data?.episodes?.results || []).filter(
+    (episode): episode is Episode => episode !== null
   );
-  const pageInfo = data?.locations?.info || {};
+  const pageInfo = data?.episodes?.info || {};
 
   if (loading) {
     return <div>Loading...</div>; // TODO: localization
@@ -34,8 +34,8 @@ export const Locations = () => {
         <TableHeader>
           <TableRow>
             <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Type</TableHeaderCell>
-            <TableHeaderCell>Dimension</TableHeaderCell>
+            <TableHeaderCell>Air date</TableHeaderCell>
+            <TableHeaderCell>Code</TableHeaderCell>
           </TableRow>
         </TableHeader>
         <tbody>
@@ -43,8 +43,8 @@ export const Locations = () => {
             <Fragment key={location.id}>
               <TableRow onClick={() => location.id}>
                 <TableCell>{location.name}</TableCell>
-                <TableCell>{location.type}</TableCell>
-                <TableCell>{location.dimension}</TableCell>
+                <TableCell>{location.air_date}</TableCell>
+                <TableCell>{location.episode}</TableCell>
               </TableRow>
             </Fragment>
           ))}
@@ -52,16 +52,10 @@ export const Locations = () => {
       </Table>
 
       <div>
-        <button
-          onClick={() => pageInfo?.prev && setPage(pageInfo.prev)}
-          disabled={!pageInfo?.prev}
-        >
+        <button onClick={() => pageInfo?.prev && setPage(pageInfo.prev)} disabled={!pageInfo?.prev}>
           Previous
         </button>
-        <button
-          onClick={() => pageInfo?.next && setPage(pageInfo.next)}
-          disabled={!pageInfo?.next}
-        >
+        <button onClick={() => pageInfo?.next && setPage(pageInfo.next)} disabled={!pageInfo?.next}>
           Next
         </button>
       </div>

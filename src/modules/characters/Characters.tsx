@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 
+import { Character, useGetCharactersQuery } from "../../generated/graphql";
 import {
   Container,
   Table,
@@ -7,8 +8,7 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-} from "./Characters.styles";
-import { Character, useGetCharactersQuery } from "../../generated/graphql";
+} from "../../shared/styles";
 
 export const Characters = () => {
   const [page, setPage] = useState(1);
