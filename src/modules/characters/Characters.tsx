@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Character, useGetCharactersQuery } from "../../generated/graphql";
 import Pagination from "../../shared/pagination/Pagination";
 import {
@@ -11,6 +11,7 @@ import {
 } from "../../shared/styles";
 
 export const Characters = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1", 10);
   const { data, loading, error } = useGetCharactersQuery({
@@ -33,7 +34,7 @@ export const Characters = () => {
   }
 
   if (error) {
-    return <div>Error loading devices</div>;
+    return <div>Error loading characters</div>;
   }
 
   if (!characters.length) {
@@ -44,24 +45,21 @@ export const Characters = () => {
     <Container>
       <CardGrid>
         {characters.map((character) => (
-          <Link
-            to={`/characters/${character.id}`}
-            style={{ textDecoration: "none", color: "inherit" }}
+          <Card
             key={character.id}
+            onClick={() => navigate(`/characters/${character.id}`)}
           >
-            <Card>
-              <CardTitle>{character.name}</CardTitle>
-              <CardText>{character.species}</CardText>
-              <CardText>
-                <CardLink
-                  to={`/locations/${character.location?.id}`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {character.location?.name}
-                </CardLink>
-              </CardText>
-            </Card>
-          </Link>
+            <CardTitle>{character.name}</CardTitle>
+            <CardText>{character.species}</CardText>
+            <CardText>
+              <CardLink
+                to={`/locations/${character.location?.id}`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {character.location?.name}
+              </CardLink>
+            </CardText>
+          </Card>
         ))}
       </CardGrid>
 
