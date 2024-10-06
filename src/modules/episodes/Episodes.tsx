@@ -1,13 +1,11 @@
-import { Fragment } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Episode, useGetEpisodesQuery } from "../../generated/graphql";
 import {
+  Card,
+  CardGrid,
+  CardText,
+  CardTitle,
   Container,
-  Table,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
 } from "../../shared/styles";
 import Pagination from "../../shared/pagination/Pagination";
 
@@ -40,28 +38,21 @@ export const Episodes = () => {
 
   return (
     <Container>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Air date</TableHeaderCell>
-            <TableHeaderCell>Code</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <tbody>
-          {episodes.map((episode) => (
-            <Fragment key={episode.id}>
-              <TableRow>
-                <TableCell>
-                  <Link to={`/episode/${episode?.id}`}>{episode?.name}</Link>
-                </TableCell>
-                <TableCell>{episode.air_date}</TableCell>
-                <TableCell>{episode.episode}</TableCell>
-              </TableRow>
-            </Fragment>
-          ))}
-        </tbody>
-      </Table>
+      <CardGrid>
+        {episodes.map((episode) => (
+          <Link
+            to={`/location/${episode.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+            key={episode.id}
+          >
+            <Card>
+              <CardTitle>{episode.name}</CardTitle>
+              <CardText>{episode.air_date}</CardText>
+              <CardText>{episode.episode}</CardText>
+            </Card>
+          </Link>
+        ))}
+      </CardGrid>
 
       <Pagination pageInfo={pageInfo} onPageChange={onPageChange} />
     </Container>

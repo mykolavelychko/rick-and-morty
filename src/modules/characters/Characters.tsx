@@ -1,15 +1,13 @@
-import { Fragment } from "react";
-
 import { Link, useSearchParams } from "react-router-dom";
 import { Character, useGetCharactersQuery } from "../../generated/graphql";
 import Pagination from "../../shared/pagination/Pagination";
 import {
+  Card,
+  CardGrid,
+  CardLink,
+  CardText,
+  CardTitle,
   Container,
-  Table,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
 } from "../../shared/styles";
 
 export const Characters = () => {
@@ -40,34 +38,28 @@ export const Characters = () => {
 
   return (
     <Container>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Species</TableHeaderCell>
-            <TableHeaderCell>Location</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <tbody>
-          {characters.map((character: Character) => (
-            <Fragment key={character.id}>
-              <TableRow>
-                <TableCell>
-                  <Link to={`/character/${character.id}`}>
-                    {character.name}
-                  </Link>
-                </TableCell>
-                <TableCell>{character.species}</TableCell>
-                <TableCell>
-                  <Link to={`/location/${character.location?.id}`}>
-                    {character.location?.name}
-                  </Link>
-                </TableCell>
-              </TableRow>
-            </Fragment>
-          ))}
-        </tbody>
-      </Table>
+      <CardGrid>
+        {characters.map((character) => (
+          <Link
+            to={`/character/${character.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+            key={character.id}
+          >
+            <Card>
+              <CardTitle>{character.name}</CardTitle>
+              <CardText>{character.species}</CardText>
+              <CardText>
+                <CardLink
+                  to={`/location/${character.location?.id}`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {character.location?.name}
+                </CardLink>
+              </CardText>
+            </Card>
+          </Link>
+        ))}
+      </CardGrid>
 
       <Pagination pageInfo={pageInfo} onPageChange={onPageChange} />
     </Container>

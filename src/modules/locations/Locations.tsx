@@ -1,14 +1,12 @@
-import { Fragment } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Location, useGetLocationsQuery } from "../../generated/graphql";
 import Pagination from "../../shared/pagination/Pagination";
 import {
+  Card,
+  CardGrid,
+  CardText,
+  CardTitle,
   Container,
-  Table,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
 } from "../../shared/styles";
 
 export const Locations = () => {
@@ -40,28 +38,21 @@ export const Locations = () => {
 
   return (
     <Container>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Type</TableHeaderCell>
-            <TableHeaderCell>Dimension</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <tbody>
-          {locations.map((location) => (
-            <Fragment key={location.id}>
-              <TableRow>
-                <TableCell>
-                  <Link to={`/location/${location.id}`}>{location.name}</Link>
-                </TableCell>
-                <TableCell>{location.type}</TableCell>
-                <TableCell>{location.dimension}</TableCell>
-              </TableRow>
-            </Fragment>
-          ))}
-        </tbody>
-      </Table>
+      <CardGrid>
+        {locations.map((location) => (
+          <Link
+            to={`/location/${location.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+            key={location.id}
+          >
+            <Card>
+              <CardTitle>{location.name}</CardTitle>
+              <CardText>{location.type}</CardText>
+              <CardText>{location.dimension}</CardText>
+            </Card>
+          </Link>
+        ))}
+      </CardGrid>
 
       <Pagination pageInfo={pageInfo} onPageChange={onPageChange} />
     </Container>
