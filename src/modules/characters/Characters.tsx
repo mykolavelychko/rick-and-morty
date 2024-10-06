@@ -36,12 +36,16 @@ export const Characters = () => {
     return <div>Error loading devices</div>;
   }
 
+  if (!characters.length) {
+    return <div>No characters found</div>;
+  }
+
   return (
     <Container>
       <CardGrid>
         {characters.map((character) => (
           <Link
-            to={`/character/${character.id}`}
+            to={`/characters/${character.id}`}
             style={{ textDecoration: "none", color: "inherit" }}
             key={character.id}
           >
@@ -50,7 +54,7 @@ export const Characters = () => {
               <CardText>{character.species}</CardText>
               <CardText>
                 <CardLink
-                  to={`/location/${character.location?.id}`}
+                  to={`/locations/${character.location?.id}`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   {character.location?.name}

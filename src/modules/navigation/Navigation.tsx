@@ -1,31 +1,55 @@
-import { Link, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const NavBar = styled.nav`
   background-color: #1e272e;
-  padding: 10px;
+  padding: 10px 5px;
   display: flex;
-  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
 `;
 
-const NavLink = styled(Link)<{ active: boolean }>`
-  color: ${(props) => (props.active ? "#ff9f43" : "white")};
+const StyledNavLink = styled(NavLink)`
+  color: white;
   margin: 0 10px;
   text-decoration: none;
-  font-weight: ${(props) => (props.active ? "bold" : "normal")};
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+
+  &.active {
+    background-color: #ff9f43;
+    color: #1e272e;
+    font-weight: bold;
+  }
 
   &:hover {
-    text-decoration: underline;
+    background-color: #0abde3;
+    color: #1e272e;
   }
 `;
 
 const Navigation = () => {
-  const location = useLocation();
   return (
     <NavBar>
-      <NavLink to="/" active={location.pathname === "/"}>Characters</NavLink>
-      <NavLink to="/locations" active={location.pathname === "/locations"}>Locations</NavLink>
-      <NavLink to="/episodes" active={location.pathname === "/episodes"}>Episodes</NavLink>
+      <StyledNavLink
+        to="/characters"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        Characters
+      </StyledNavLink>
+      <StyledNavLink
+        to="/locations"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        Locations
+      </StyledNavLink>
+      <StyledNavLink
+        to="/episodes"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        Episodes
+      </StyledNavLink>
     </NavBar>
   );
 };

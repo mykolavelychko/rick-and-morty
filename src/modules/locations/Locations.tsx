@@ -36,12 +36,16 @@ export const Locations = () => {
     return <div>Error loading locations</div>;
   }
 
+  if (!locations.length) {
+    return <div>No locations found</div>;
+  }
+
   return (
     <Container>
       <CardGrid>
         {locations.map((location) => (
           <Link
-            to={`/location/${location.id}`}
+            to={`/locations/${location.id}`}
             style={{ textDecoration: "none", color: "inherit" }}
             key={location.id}
           >

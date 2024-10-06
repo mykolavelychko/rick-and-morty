@@ -27,9 +27,11 @@ query GetCharacter($id: ID!) {
     type
     gender
     origin {
+      id
       name
     }
     location {
+      id
       name
     }
     image

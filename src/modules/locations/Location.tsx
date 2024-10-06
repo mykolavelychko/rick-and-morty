@@ -1,14 +1,7 @@
 import { Fragment } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useGetLocationQuery } from "../../generated/graphql";
-import {
-  Container,
-  Table,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from "../../shared/styles";
+import { Container } from "../../shared/styles";
 
 export const Location = () => {
   const { id } = useParams<{ id: string }>();
@@ -40,27 +33,13 @@ export const Location = () => {
       <p>
         <strong>Dimension:</strong> {location.dimension}
       </p>
-      <h2>Residents</h2>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <tbody>
-          {location.residents.map((resident) => (
-            <Fragment key={resident?.id}>
-              <TableRow>
-                <TableCell>
-                  <Link to={`/character/${resident?.id}`}>
-                    {resident?.name}
-                  </Link>
-                </TableCell>
-              </TableRow>
-            </Fragment>
-          ))}
-        </tbody>
-      </Table>
+      <h2>Residents:</h2>
+      {location.residents.map((character, index) => (
+        <Fragment key={character?.id}>
+          <Link to={`/characters/${character?.id}`}>{character?.name}</Link>
+          {index < location.residents.length - 1 && ", "}
+        </Fragment>
+      ))}
     </Container>
   );
 };

@@ -1,14 +1,7 @@
 import { Fragment } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useGetEpisodeQuery } from "../../generated/graphql";
-import {
-  Container,
-  Table,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from "../../shared/styles";
+import { Container } from "../../shared/styles";
 
 export const Episode = () => {
   const { id } = useParams<{ id: string }>();
@@ -40,27 +33,13 @@ export const Episode = () => {
       <p>
         <strong>Episode Code:</strong> {episode.episode}
       </p>
-      <h2>Characters</h2>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <tbody>
-          {episode.characters.map((character) => (
-            <Fragment key={character?.id}>
-              <TableRow>
-                <TableCell>
-                  <Link to={`/character/${character?.id}`}>
-                    {character?.name}
-                  </Link>
-                </TableCell>
-              </TableRow>
-            </Fragment>
-          ))}
-        </tbody>
-      </Table>
+      <h2>Characters: </h2>
+      {episode.characters.map((character, index) => (
+        <Fragment key={character?.id}>
+          <Link to={`/characters/${character?.id}`}>{character?.name}</Link>
+          {index < episode.characters.length - 1 && ", "}
+        </Fragment>
+      ))}
     </Container>
   );
 };
