@@ -1,7 +1,8 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Character, useGetCharactersQuery } from "../../generated/graphql";
+import Pagination from "../../shared/pagination/Pagination";
 import {
   Container,
   Table,
@@ -12,15 +13,22 @@ import {
 } from "../../shared/styles";
 
 export const Characters = () => {
-  const navigate = useNavigate();
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1", 10);
   const { data, loading, error } = useGetCharactersQuery({
     variables: { page },
   });
   const characters = (data?.characters?.results || []).filter(
     (character): character is Character => character !== null
   );
-  const pageInfo = data?.characters?.info || {};
+  const pageInfo = {
+    prev: data?.characters?.info?.prev ?? undefined,
+    next: data?.characters?.info?.next ?? undefined,
+  };
+
+  const onPageChange = (newPage: number) => {
+    setSearchParams({ page: newPage.toString() });
+  };
 
   if (loading) {
     return <div>Loading...</div>; // TODO: localization
@@ -61,20 +69,7 @@ export const Characters = () => {
         </tbody>
       </Table>
 
-      <div>
-        <button
-          onClick={() => pageInfo?.prev && setPage(pageInfo.prev)}
-          disabled={!pageInfo?.prev}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => pageInfo?.next && setPage(pageInfo.next)}
-          disabled={!pageInfo?.next}
-        >
-          Next
-        </button>
-      </div>
+      <Pagination pageInfo={pageInfo} onPageChange={onPageChange} />
     </Container>
   );
 };
