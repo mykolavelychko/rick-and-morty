@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Character, useGetCharactersQuery } from "../../generated/graphql";
 import {
   Container,
@@ -43,10 +43,18 @@ export const Characters = () => {
         <tbody>
           {characters.map((character: Character) => (
             <Fragment key={character.id}>
-              <TableRow onClick={() => navigate(`/character/${character.id}`)}>
-                <TableCell>{character.name}</TableCell>
+              <TableRow>
+                <TableCell>
+                  <Link to={`/character/${character.id}`}>
+                    {character.name}
+                  </Link>
+                </TableCell>
                 <TableCell>{character.species}</TableCell>
-                <TableCell>{character.location?.name}</TableCell>
+                <TableCell>
+                  <Link to={`/location/${character.location?.id}`}>
+                    {character.location?.name}
+                  </Link>
+                </TableCell>
               </TableRow>
             </Fragment>
           ))}

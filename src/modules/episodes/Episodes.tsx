@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 import { Episode, useGetEpisodesQuery } from "../../generated/graphql";
 import {
   Container,
@@ -8,10 +9,8 @@ import {
   TableHeaderCell,
   TableRow,
 } from "../../shared/styles";
-import { useNavigate } from "react-router-dom";
 
 export const Episodes = () => {
-  const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
   const { data, loading, error } = useGetEpisodesQuery({
     variables: { page },
@@ -43,8 +42,10 @@ export const Episodes = () => {
         <tbody>
           {episodes.map((episode) => (
             <Fragment key={episode.id}>
-              <TableRow onClick={() => navigate(`/episode/${episode.id}`)}>
-                <TableCell>{episode.name}</TableCell>
+              <TableRow>
+                <TableCell>
+                  <Link to={`/episode/${episode?.id}`}>{episode?.name}</Link>
+                </TableCell>
                 <TableCell>{episode.air_date}</TableCell>
                 <TableCell>{episode.episode}</TableCell>
               </TableRow>
@@ -54,10 +55,16 @@ export const Episodes = () => {
       </Table>
 
       <div>
-        <button onClick={() => pageInfo?.prev && setPage(pageInfo.prev)} disabled={!pageInfo?.prev}>
+        <button
+          onClick={() => pageInfo?.prev && setPage(pageInfo.prev)}
+          disabled={!pageInfo?.prev}
+        >
           Previous
         </button>
-        <button onClick={() => pageInfo?.next && setPage(pageInfo.next)} disabled={!pageInfo?.next}>
+        <button
+          onClick={() => pageInfo?.next && setPage(pageInfo.next)}
+          disabled={!pageInfo?.next}
+        >
           Next
         </button>
       </div>

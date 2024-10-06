@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetLocationQuery } from "../../generated/graphql";
 import {
   Container,
@@ -51,7 +51,11 @@ export const Location = () => {
           {location.residents.map((resident) => (
             <Fragment key={resident?.id}>
               <TableRow>
-                <TableCell>{resident?.name}</TableCell>
+                <TableCell>
+                  <Link to={`/character/${resident?.id}`}>
+                    {resident?.name}
+                  </Link>
+                </TableCell>
               </TableRow>
             </Fragment>
           ))}

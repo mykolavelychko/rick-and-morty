@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetCharacterQuery } from "../../generated/graphql";
 import {
   Container,
@@ -64,7 +64,9 @@ export const Character = () => {
           {character.episode.map((episode) => (
             <Fragment key={episode?.id}>
               <TableRow>
-                <TableCell>{episode?.name}</TableCell>
+                <TableCell>
+                  <Link to={`/episode/${episode?.id}`}>{episode?.name}</Link>
+                </TableCell>
               </TableRow>
             </Fragment>
           ))}
