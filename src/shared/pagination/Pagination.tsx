@@ -1,4 +1,4 @@
-import React from "react";
+import { PaginationButton, PaginationContainer } from "./Pagination.styles";
 
 interface PaginationProps {
   pageInfo: {
@@ -10,14 +10,20 @@ interface PaginationProps {
 
 const Pagination = ({ pageInfo, onPageChange }: PaginationProps) => {
   return (
-    <div>
-      <button onClick={() => pageInfo.prev && onPageChange(pageInfo.prev)} disabled={!pageInfo.prev}>
+    <PaginationContainer>
+      <PaginationButton
+        onClick={() => pageInfo.prev && onPageChange(pageInfo.prev)}
+        disabled={!pageInfo.prev}
+      >
         Previous
-      </button>
-      <button onClick={() => pageInfo.next && onPageChange(pageInfo.next)} disabled={!pageInfo.next}>
+      </PaginationButton>
+      <PaginationButton
+        onClick={() => pageInfo.next && onPageChange(pageInfo.next)}
+        disabled={!pageInfo.next}
+      >
         Next
-      </button>
-    </div>
+      </PaginationButton>
+    </PaginationContainer>
   );
 };
 
