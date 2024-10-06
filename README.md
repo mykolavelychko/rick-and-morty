@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# General information
+
+This simple React application allows users to explore data from the Rick and Morty
+API.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 
 ## Available Scripts
 
@@ -37,10 +41,36 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### `npm run generate`
 
-## Learn More
+Runs the GraphQL code generator to create TypeScript types from your GraphQL queries.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Configuration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Apollo Client
+
+The Apollo Client is configured in [`src/apolloClient.ts`](src/apolloClient.ts).
+
+### Routing
+
+The application routing is handled by [`src/app/AppRouter.tsx`](src/app/AppRouter.tsx).
+
+### Components
+
+- Main application component: [`src/app/App.tsx`](src/app/App.tsx)
+- Characters module: [`src/modules/characters/Characters.tsx`](src/modules/characters/Characters.tsx)
+- Locations module: [`src/modules/locations/Locations.tsx`](src/modules/locations/Locations.tsx)
+- Episodes module: [`src/modules/episodes/Episodes.tsx`](src/modules/episodes/Episodes.tsx)
+- Not Found page: [`src/modules/NotFound.tsx`](src/modules/NotFound.tsx)
+
+### Styling
+
+Global styles are defined in [`src/index.css`](src/index.css) and additional styles in [`src/shared/styles.ts`](src/shared/styles.ts).
+
+### Testing
+
+Tests are configured in [`jest.config.js`](jest.config.js) and setup in [`src/setupTests.ts`](src/setupTests.ts).
+
+## License
+
+This project is licensed under the MIT License.
