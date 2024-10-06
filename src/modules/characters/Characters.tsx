@@ -1,4 +1,24 @@
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+/**
+ * The `Characters` component fetches and displays a list of characters from the Rick and Morty API.
+ * It includes pagination and navigation to character details and location details.
+ *
+ * @component
+ * 
+ * @example
+ * ```tsx
+ * <Characters />
+ * ```
+ *
+ * @returns {JSX.Element} The rendered component.
+ *
+ * @remarks
+ * - Uses `useGetCharactersQuery` to fetch characters data.
+ * - Uses `useNavigate` and `useSearchParams` from `react-router-dom` for navigation and query parameters.
+ * - Displays loading, error, and no characters found states.
+ * - Renders a list of character cards with links to character details and location details.
+ * - Includes pagination controls.
+ */
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Character, useGetCharactersQuery } from "../../generated/graphql";
 import Pagination from "../../shared/pagination/Pagination";
 import {

@@ -1,3 +1,27 @@
+/**
+ * Component to display detailed information about a specific character from the Rick and Morty series.
+ * 
+ * This component fetches character data based on the `id` parameter from the URL and displays various
+ * details such as name, status, species, gender, origin, current location, image, and episodes the character
+ * has appeared in.
+ * 
+ * @component
+ * 
+ * @example
+ * ```tsx
+ * <Route path="/characters/:id" component={Character} />
+ * ```
+ * 
+ * @returns {JSX.Element} A React component that displays character details.
+ * 
+ * @remarks
+ * - Uses `useParams` from `react-router-dom` to extract the character ID from the URL.
+ * - Uses `useGetCharacterQuery` from the generated GraphQL hooks to fetch character data.
+ * - Displays loading and error states appropriately.
+ * - Links to the character's origin and current location, as well as episodes they appear in.
+ * 
+ * @see {@link https://rickandmortyapi.com/documentation | Rick and Morty API Documentation}
+ */
 import { Fragment } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useGetCharacterQuery } from "../../generated/graphql";
